@@ -9,7 +9,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./price.component.scss']
 })
 export class PriceComponent implements OnInit {
-  activePrice: string = '';
+  prevPrice: number = 0;
+  activePrice: number = 0;
 
   constructor(
     private readonly binanceService: BinanceService,
@@ -17,11 +18,23 @@ export class PriceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const { updateInterval } = environment;
-    interval(updateInterval).subscribe(_ => {
-      this.activePrice = this.binanceService.activePrice;
-      this.cdr.detectChanges();
-    });
+    this.binanceService.getPrice()
+      .subscribe((data: any) => {
+        const { symbol, price } = data;
+        if (symbol != this.binanceService.selectedSymbol) return;
+
+        this.prevPrice = this.activePrice;
+        this.activePrice = price;
+        this.cdr.detectChanges();
+      })
+  }
+
+  isDown() {
+    return this.prevPrice > this.activePrice;
+  }
+
+  isUp() {
+    return this.prevPrice < this.activePrice;
   }
 
 }

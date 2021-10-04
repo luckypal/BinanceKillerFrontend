@@ -13,7 +13,7 @@ import { PriceComponent } from '../components/price/price.component';
 })
 export class DashboardComponent implements OnInit {
   myControl = new FormControl();
-  symbols: string[] = ['BTCUSDT', 'ETHUSDT'];
+  symbols: string[] = [];
   filteredSymbols?: Observable<string[]>;
 
   constructor(
@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onSelectSymbol(symbol: string) {
-    this.binanceService.getPrices(symbol);
+    this.binanceService.setSymbol(symbol);
   }
 
   onBuy() {

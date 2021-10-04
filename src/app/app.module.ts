@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,12 +16,17 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PriceComponent } from './components/price/price.component';
+import { BalanceComponent } from './components/balance/balance.component';
+import { environment } from 'src/environments/environment';
+
+const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    PriceComponent
+    PriceComponent,
+    BalanceComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +41,7 @@ import { PriceComponent } from './components/price/price.component';
     MatAutocompleteModule,
     MatGridListModule,
     HttpClientModule,
+    SocketIoModule.forRoot(config),
   ],
   providers: [],
   bootstrap: [AppComponent]

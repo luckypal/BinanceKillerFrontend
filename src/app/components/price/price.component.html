@@ -1,1 +1,1 @@
-<h1>$ {{activePrice}}</h1>
+<h1 [ngClass]="{'danger': isDown(), 'success': isUp(), 'label-price': true}">{{activePrice}}</h1>

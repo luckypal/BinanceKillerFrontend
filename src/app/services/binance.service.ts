@@ -2,48 +2,32 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEventType, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { interval } from 'rxjs';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BinanceService {
   selectedSymbol: string = '';
-  activePrice: string = '';
+  activePrice: number = 0;
 
   constructor(
-    private httpClient: HttpClient
-  ) {
-    const { updateInterval } = environment;
-    interval(updateInterval).subscribe(x => {
-      if (!this.selectedSymbol) return null;
-      const { serverUrl } = environment;
-      this.httpClient
-        .get(`${serverUrl}/price/${this.selectedSymbol}`, {})
-        .subscribe((data) => {
-          this.activePrice = data as string;
-        })
-      return null;
-    });
-  }
+    private httpClient: HttpClient,
+    private socket: Socket
+  ) { }
 
   async getSymbols(): Promise<string[]> {
-    const { serverUrl } = environment;
-    const symbols = await this.httpClient.get(`${serverUrl}/symbols`).toPromise();
+    const { apiUrl } = environment;
+    const symbols = await this.httpClient.get(`${apiUrl}/symbols`).toPromise();
     return symbols as string[];
   }
 
-  getPrices(symbol: string) {
+  setSymbol(symbol: string) {
     this.selectedSymbol = symbol;
+    this.socket.emit('symbol', { symbol });
+  }
 
-    // this.httpClient.post(`${serverUrl}/price/${symbol}`, {}, {
-    //   observe: 'events',
-    //   reportProgress: true,
-    //   responseType: 'json',
-    // }).pipe(map(data => {
-    //   console.log('AAAAAA', data)
-    //   return data;
-    // })).subscribe(data => {
-    //   console.log('DATA', data);
-    // });
+  getPrice() {
+    return this.socket.fromEvent('price');
   }
 }

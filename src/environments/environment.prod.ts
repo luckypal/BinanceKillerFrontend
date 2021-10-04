@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  serverUrl: 'https://bkbot.invidme.com/api',
+  apiUrl: 'https://bkbot.invidme.com/api',
+  serverUrl: 'https://bkbot.invidme.com',
   updateInterval: 1000
 };
