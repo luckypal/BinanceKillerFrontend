@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
 import { BinanceService } from '../services/binance.service';
+import { PriceComponent } from '../components/price/price.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit {
   filteredSymbols?: Observable<string[]>;
 
   constructor(
-    private readonly binanceService: BinanceService
+    public readonly binanceService: BinanceService
   ) { }
 
   async ngOnInit() {
@@ -35,6 +36,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onSelectSymbol(symbol: string) {
+    this.binanceService.getPrices(symbol);
   }
 
   onBuy() {

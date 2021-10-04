@@ -14,11 +14,13 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { PriceComponent } from './components/price/price.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    PriceComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     MatAutocompleteModule,
     MatGridListModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

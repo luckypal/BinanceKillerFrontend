@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'http://localhost:3333/api'
+  serverUrl: 'http://localhost:3333/api',
+  updateInterval: 10000
 };
 
 /*
