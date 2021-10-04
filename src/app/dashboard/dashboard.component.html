@@ -1,0 +1,48 @@
+<!-- Resources -->
+
+<mat-grid-list cols="3" rowHeight="6:1">
+  <mat-grid-tile>
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Symbol</mat-label>
+        <input type="text" placeholder="Select one" aria-label="Number" matInput [formControl]="myControl"
+          [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)='onSelectSymbol($event.option.value)'>
+          <mat-option *ngFor="let symbol of filteredSymbols | async" [value]="symbol">
+            {{symbol}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <h1>$ *</h1>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <h1>$ ***</h1>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+<mat-grid-list cols="3" rowHeight="3:1">
+  <mat-grid-tile>
+    <div class="full-width">
+      <button mat-raised-button color="success" class="full-width" on-click="onBuy()">BUY</button>
+      <br />
+      <br />
+      <button mat-raised-button color="danger" class="full-width" on-click="onSell()">SELL</button>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div class="full-width">
+      <button mat-raised-button color="primary" class="full-width" on-click="onBuyComplete()">Complete</button>
+      <br />
+      <br />
+      <button mat-raised-button color="primary" class="full-width" on-click="onSellComplete()">Complete</button>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+  </mat-grid-tile>
+</mat-grid-list>
