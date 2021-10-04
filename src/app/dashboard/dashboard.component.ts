@@ -89,6 +89,10 @@ export class DashboardComponent implements OnInit {
   }
 
   onBuy() {
+    if (this.amount == 0) {
+      alert('Use amount');
+      return;
+    }
     this.ordersService.buy(this.symbol, this.leverage, this.amount);
     this.orderStatus = LastOrderStatus.BUY;
   }
@@ -99,6 +103,10 @@ export class DashboardComponent implements OnInit {
   }
 
   onSell() {
+    if (this.amount == 0) {
+      alert('Use amount');
+      return;
+    }
     this.ordersService.sell(this.symbol, this.leverage, this.amount);
     this.orderStatus = LastOrderStatus.SELL;
   }

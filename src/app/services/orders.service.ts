@@ -83,7 +83,6 @@ export class OrdersService {
       finishedAt: Date.now()
     }
     this.orders.push(order);
-    console.log(JSON.stringify(this.orders));
   }
 
   sell(
@@ -126,7 +125,6 @@ export class OrdersService {
       finishedAt: Date.now()
     }
     this.orders.push(order);
-    console.log(JSON.stringify(this.orders));
   }
 
 
