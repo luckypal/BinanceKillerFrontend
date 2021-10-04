@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:3333/api',
   serverUrl: 'http://localhost:3333',
-  updateInterval: 1000
+  updateInterval: 1000,
+  primaryUsdt: 1000,
 };
 
 /*

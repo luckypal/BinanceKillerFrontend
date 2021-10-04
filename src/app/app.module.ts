@@ -14,10 +14,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { PriceComponent } from './components/price/price.component';
 import { BalanceComponent } from './components/balance/balance.component';
 import { environment } from 'src/environments/environment';
+import { ReversePipe } from './pipes/reverse.pipe';
+import { OrderComponent } from './components/order/order.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
 
@@ -26,7 +31,9 @@ const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
     AppComponent,
     DashboardComponent,
     PriceComponent,
-    BalanceComponent
+    BalanceComponent,
+    ReversePipe,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -40,8 +47,14 @@ const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
     MatInputModule,
     MatAutocompleteModule,
     MatGridListModule,
+    MatSliderModule,
+    MatListModule,
     HttpClientModule,
     SocketIoModule.forRoot(config),
+    FlexLayoutModule.withConfig({
+      useColumnBasisZero: false,
+      printWithBreakpoints: ['md', 'lt-lg', 'lt-xl', 'gt-sm', 'gt-xs']
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

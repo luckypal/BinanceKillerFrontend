@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { BinanceService } from 'src/app/services/binance.service';
 import { interval } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { OrdersService } from 'src/app/services/orders.service';
 
 @Component({
   selector: 'app-price',
@@ -14,6 +15,7 @@ export class PriceComponent implements OnInit {
 
   constructor(
     private readonly binanceService: BinanceService,
+    private readonly orderService: OrdersService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -25,6 +27,10 @@ export class PriceComponent implements OnInit {
 
         this.prevPrice = this.activePrice;
         this.activePrice = price;
+        this.binanceService.activePrice = price;
+
+        const { primaryUsdt } = environment;
+        this.orderService.getBalances(primaryUsdt);
         this.cdr.detectChanges();
       })
   }

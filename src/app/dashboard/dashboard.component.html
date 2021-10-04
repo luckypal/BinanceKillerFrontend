@@ -6,7 +6,7 @@
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Symbol</mat-label>
         <input type="text" placeholder="Select one" aria-label="Number" matInput [formControl]="myControl"
-          [matAutocomplete]="auto">
+          [matAutocomplete]="auto" [matAutocompleteDisabled]="!isSelectable">
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)='onSelectSymbol($event.option.value)'>
           <mat-option *ngFor="let symbol of filteredSymbols | async" [value]="symbol">
             {{symbol}}
@@ -19,30 +19,60 @@
     <app-price></app-price>
   </mat-grid-tile>
   <mat-grid-tile>
-    <h1>***</h1>
+    <h1>{{getBalance()}}</h1>
   </mat-grid-tile>
 </mat-grid-list>
 
+<mat-grid-list cols="2" rowHeight="5:1">
+  <mat-grid-tile>
+    <div class="full-width">
+      <mat-label bold>Leverage {{leverage}}</mat-label>
+      <mat-slider thumbLabel tickInterval="1" step="1" min="1" max="125" aria-label="units" class="full-width" (change)="onChangeLeverage($event.value)" [disabled]="!isBuyable"></mat-slider>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div class="full-width">
+      <mat-label bold>Amount {{amount}}</mat-label>
+      <mat-slider thumbLabel tickInterval="1" step="1" min="0" [max]="getBalance()" aria-label="units" class="full-width" (change)="onChangeAmount($event.value)" [disabled]="!isBuyable"></mat-slider>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
 
 <mat-grid-list cols="3" rowHeight="3:1">
   <mat-grid-tile>
     <div class="full-width">
-      <button mat-raised-button color="success" class="full-width" on-click="onBuy()">BUY</button>
+      <button mat-raised-button color="success" class="full-width" on-click="onBuy()" [disabled]="!isBuyable">BUY</button>
       <br />
       <br />
-      <button mat-raised-button color="danger" class="full-width" on-click="onSell()">SELL</button>
+      <button mat-raised-button color="danger" class="full-width" on-click="onSell()" [disabled]="!isBuyable">SELL</button>
     </div>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <div class="full-width">
-      <button mat-raised-button color="primary" class="full-width" on-click="onBuyComplete()">Complete</button>
+      <button mat-raised-button color="primary" class="full-width" on-click="onBuyComplete()" [disabled]="!isBuyComplate">Complete</button>
       <br />
       <br />
-      <button mat-raised-button color="primary" class="full-width" on-click="onSellComplete()">Complete</button>
+      <button mat-raised-button color="primary" class="full-width" on-click="onSellComplete()" [disabled]="!isSellComplete">Complete</button>
     </div>
   </mat-grid-tile>
 
   <mat-grid-tile>
+    <h1 clas="label-price" [ngClass]="{'danger': getAmountChange() < 0, 'success': getAmountChange() > 0, 'label-price': true}">{{getAmountChange()}}</h1>
   </mat-grid-tile>
 </mat-grid-list>
+
+<div class="full-width orders" fxLayout="column-reverse">
+  <div *ngFor="let order of orders " class="full-width">
+    <app-order [order]="order"></app-order>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="15">Symbol</div>
+    <div fxFlex="15">Price</div>
+    <div fxFlex="15">Amount</div>
+    <div fxFlex="15">Leverage</div>
+    <div fxFlex="15">Total</div>
+    <div fxFlex="5">Fee</div>
+    <div fxFlex="20">Created At</div>
+  </div>
+</div>

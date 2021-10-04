@@ -1,0 +1,14 @@
+.order {
+  border-left: solid;
+  border-left-width: 3px;
+  margin-bottom: 2px;
+  padding: 5px;
+}
+
+.order.buy {
+  border-left-color: rgb(14, 203, 129);
+}
+
+.order.sell {
+  border-left-color: rgb(246, 70, 93);
+}
