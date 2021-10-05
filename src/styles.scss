@@ -17,6 +17,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
+.label-price {
+  text-align: center;
+}
+
 .label-price.success {
   color: rgb(14, 203, 129);
 }

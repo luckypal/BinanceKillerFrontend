@@ -78,9 +78,12 @@ export class DashboardComponent implements OnInit {
   getAmountChange() {
     const { balances, lastBalance } = this.ordersService;
     if (!balances) return 0;
-    const totalBalance = Math.floor(balances.total.TOTAL * 100) / 100;
+    let totalBalance = balances.total.TOTAL;
     let changes = totalBalance - lastBalance;
+
     changes = Math.floor(changes * 100) / 100;
+    totalBalance = Math.floor(balances.total.TOTAL * 100) / 100;
+
     if (changes) this.titleService.setTitle(`${changes} - Binkiller`);
     else this.titleService.setTitle(`${totalBalance} - Binkiller`);
     return changes;

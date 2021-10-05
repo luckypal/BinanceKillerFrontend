@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Order, OrderSide } from '../models/order.model';
 import { BinanceService } from './binance.service';
 import { environment } from 'src/environments/environment';
+import { LocalStorageService } from './local-storage.service';
 
 export enum LastOrderStatus {
   INITIATE = "INITIATE",
@@ -31,16 +32,19 @@ export class OrdersService {
   feePercent = 0.0005;
 
   constructor(
-    private readonly binanceService: BinanceService
+    private readonly binanceService: BinanceService,
+    private readonly storageService: LocalStorageService
   ) {
     // this.orders = [
-      // { "signalId": "asdfasdfsdf", "orderId": "ckuc96vzc0000389h4bn05h7i", "symbol": "BTCUSDT", "price": 1000, "amount": 1000, "leverage": 1, "side": OrderSide.BUY, "createdAt": 1633327784040, "finishedAt": 1633327784040 },
-      // { "signalId": "asdfasdfsdf", "orderId": "ckuc96xev0001389hz0d1rgbu", "symbol": "BTCUSDT", "price": 1100, "amount": 1000, "leverage": 1, "side": OrderSide.SELL, "createdAt": 1633327785895, "finishedAt": 1633327785895 },
-      // { "signalId": "asdfasdfsdf", "orderId": "ckuc96xev0001389hz0d1rgbu", "symbol": "BTCUSDT", "price": 1100, "amount": 1000, "leverage": 5, "side": OrderSide.SELL, "createdAt": 1633327785895, "finishedAt": 1633327785895 }
+    // { "signalId": "asdfasdfsdf", "orderId": "ckuc96vzc0000389h4bn05h7i", "symbol": "BTCUSDT", "price": 1000, "amount": 1000, "leverage": 1, "side": OrderSide.BUY, "createdAt": 1633327784040, "finishedAt": 1633327784040 },
+    // { "signalId": "asdfasdfsdf", "orderId": "ckuc96xev0001389hz0d1rgbu", "symbol": "BTCUSDT", "price": 1100, "amount": 1000, "leverage": 1, "side": OrderSide.SELL, "createdAt": 1633327785895, "finishedAt": 1633327785895 },
+    // { "signalId": "asdfasdfsdf", "orderId": "ckuc96xev0001389hz0d1rgbu", "symbol": "BTCUSDT", "price": 1100, "amount": 1000, "leverage": 5, "side": OrderSide.SELL, "createdAt": 1633327785895, "finishedAt": 1633327785895 }
     // ];
 
-    this.lastBalance = environment.primaryUsdt;
-    this.getBalances(this.lastBalance);
+    this.orders = this.storageService.load();
+    const { primaryUsdt } = environment;
+    this.lastBalance = primaryUsdt;
+    this.getBalances(primaryUsdt);
   }
 
   buy(
@@ -65,6 +69,7 @@ export class OrdersService {
       finishedAt: Date.now()
     };
     this.orders.push(order);
+    this.storageService.save(this.orders);
   }
 
   buyComplete() {
@@ -83,6 +88,7 @@ export class OrdersService {
       finishedAt: Date.now()
     }
     this.orders.push(order);
+    this.storageService.save(this.orders);
   }
 
   sell(
@@ -107,6 +113,7 @@ export class OrdersService {
       finishedAt: Date.now()
     };
     this.orders.push(order);
+    this.storageService.save(this.orders);
   }
 
   sellComplete() {
@@ -125,6 +132,7 @@ export class OrdersService {
       finishedAt: Date.now()
     }
     this.orders.push(order);
+    this.storageService.save(this.orders);
   }
 
 
@@ -213,6 +221,10 @@ export class OrdersService {
           }
         }
         balances.SPOT -= fee;
+
+        if (this.orders.length % 2 == 0) {
+          this.lastBalance = balances.SPOT;
+        }
       });
 
     let totalBalance = balances.SPOT - balances.LOAN * direction;
@@ -221,9 +233,6 @@ export class OrdersService {
       if (coin == 'SPOT' || coin == 'LOAN') continue;
       const price = this.binanceService.activePrice;
       totalBalance += price * balances[coin];
-    }
-    if (this.orders.length % 2 == 0) {
-      this.lastBalance = totalBalance;
     }
 
     this.balances = {

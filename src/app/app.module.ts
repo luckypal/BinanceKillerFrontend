@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { StorageServiceModule } from 'ngx-webstorage-service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,6 +40,7 @@ const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    StorageServiceModule,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,

@@ -1,7 +1,7 @@
 <!-- Resources -->
 
-<mat-grid-list cols="3" rowHeight="6:1">
-  <mat-grid-tile>
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="33.33">
     <form class="example-form">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Symbol</mat-label>
@@ -14,53 +14,64 @@
         </mat-autocomplete>
       </mat-form-field>
     </form>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <app-price></app-price>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <h1>{{getBalance()}}</h1>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
 
-<mat-grid-list cols="2" rowHeight="5:1">
-  <mat-grid-tile>
+  <div fxFlex="33.33">
+    <app-price></app-price>
+  </div>
+
+  <div fxFlex="33.33">
+    <h1 class="label-price">{{getBalance()}}</h1>
+  </div>
+</div>
+
+<div fxFill fxLayout="row">
+  <div fxFlex="50">
     <div class="full-width">
       <mat-label bold>Leverage {{leverage}}</mat-label>
-      <mat-slider thumbLabel tickInterval="1" step="1" min="1" max="125" aria-label="units" class="full-width" (change)="onChangeLeverage($event.value)" [disabled]="!isBuyable"></mat-slider>
+      <mat-slider thumbLabel tickInterval="1" step="1" min="1" max="125" aria-label="units" class="full-width"
+        [(ngModel)]="leverage" [disabled]="!isBuyable"></mat-slider>
     </div>
-  </mat-grid-tile>
-  <mat-grid-tile>
+  </div>
+
+  <div fxFlex="50">
     <div class="full-width">
       <mat-label bold>Amount {{amount}}</mat-label>
-      <mat-slider thumbLabel tickInterval="1" step="1" min="0" [max]="getBalance()" aria-label="units" class="full-width" (change)="onChangeAmount($event.value)" [disabled]="!isBuyable"></mat-slider>
+      <mat-slider thumbLabel tickInterval="1" step="1" min="0" [max]="getBalance()" aria-label="units"
+        [(ngModel)]="amount" class="full-width" [disabled]="!isBuyable"></mat-slider>
     </div>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+</div>
 
-<mat-grid-list cols="3" rowHeight="3:1">
-  <mat-grid-tile>
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="33.33">
     <div class="full-width">
-      <button mat-raised-button color="success" class="full-width" on-click="onBuy()" [disabled]="!isBuyable">BUY</button>
+      <button mat-raised-button color="success" class="full-width" on-click="onBuy()"
+        [disabled]="!isBuyable">BUY</button>
       <br />
       <br />
-      <button mat-raised-button color="danger" class="full-width" on-click="onSell()" [disabled]="!isBuyable">SELL</button>
+      <button mat-raised-button color="danger" class="full-width" on-click="onSell()"
+        [disabled]="!isBuyable">SELL</button>
     </div>
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile>
+  <div fxFlex="33.33">
     <div class="full-width">
-      <button mat-raised-button color="primary" class="full-width" on-click="onBuyComplete()" [disabled]="!isBuyComplate">Complete</button>
+      <button mat-raised-button color="primary" class="full-width" on-click="onBuyComplete()"
+        [disabled]="!isBuyComplate">Complete</button>
       <br />
       <br />
-      <button mat-raised-button color="primary" class="full-width" on-click="onSellComplete()" [disabled]="!isSellComplete">Complete</button>
+      <button mat-raised-button color="primary" class="full-width" on-click="onSellComplete()"
+        [disabled]="!isSellComplete">Complete</button>
     </div>
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile>
-    <h1 clas="label-price" [ngClass]="{'danger': getAmountChange() < 0, 'success': getAmountChange() > 0, 'label-price': true}">{{getAmountChange()}}</h1>
-  </mat-grid-tile>
-</mat-grid-list>
+  <div fxFlex="33.33">
+    <h1 class="label-price"
+      [ngClass]="{'danger': getAmountChange() < 0, 'success': getAmountChange() > 0, 'label-price': true}">
+      {{getAmountChange()}}</h1>
+  </div>
+</div>
 
 <div class="full-width orders" fxLayout="column-reverse">
   <div *ngFor="let order of orders " class="full-width">
