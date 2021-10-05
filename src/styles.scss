@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-flat-button.mat-success, .mat-raised-button.mat-success, .mat-fab.mat-success, .mat-mini-fab.mat-success {
@@ -27,4 +27,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .label-price.danger {
   color: rgb(246, 70, 93);
+}
+
+div[fullHeight] {
+  height: calc(100vh - 100px) !important;
 }

@@ -4,8 +4,10 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Title } from "@angular/platform-browser";
 
-import { BinanceService } from '../services/binance.service';
-import { LastOrderStatus, OrdersService } from '../services/orders.service';
+import { BinanceService } from '../../services/binance.service';
+import { LastOrderStatus, OrdersService } from '../../services/orders.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,12 +26,20 @@ export class DashboardComponent implements OnInit {
   orderStatus: LastOrderStatus = LastOrderStatus.INITIATE;
 
   constructor(
+    private router: Router,
     private titleService: Title,
     public readonly binanceService: BinanceService,
-    public readonly ordersService: OrdersService
+    public readonly ordersService: OrdersService,
+    private readonly storageService: LocalStorageService
   ) { }
 
   async ngOnInit() {
+    const secretKey = this.storageService.getSecretKey();
+    if (!secretKey) {
+      this.router.navigate(['/']);
+      return;
+    }
+
     this.symbols = await this.binanceService.getSymbols();
     this.filteredSymbols = this.myControl.valueChanges
       .pipe(
