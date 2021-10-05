@@ -46,6 +46,27 @@ export class DashboardComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
+
+    const loadedData = this.storageService.load();
+    if (!loadedData) {
+      this.ordersService.setOrders([]);
+      return;
+    }
+
+    console.log(loadedData);
+    const {
+      symbol,
+      leverage,
+      amount,
+      lastOrder,
+      orders
+    } = loadedData;
+    this.symbol = symbol;
+    this.leverage = leverage;
+    this.amount = amount;
+    this.orderStatus = lastOrder;
+    this.ordersService.setOrders(orders);
+    this.binanceService.setSymbol(symbol);
   }
 
   private _filter(value: string): string[] {
@@ -99,39 +120,66 @@ export class DashboardComponent implements OnInit {
     return changes;
   }
 
+  saveToStorage() {
+    this.storageService.save({
+      symbol: this.symbol,
+      leverage: this.leverage,
+      amount: this.amount,
+      lastOrder: this.orderStatus,
+      orders: this.orders
+    })
+  }
+
   onChangeLeverage(value: any) {
     this.leverage = value;
+    this.saveToStorage();
   }
 
   onChangeAmount(amount: any) {
     this.amount = amount;
+    this.saveToStorage();
   }
 
   onBuy() {
+    this.adjustAmount();
     if (this.amount == 0) {
       alert('Use amount');
       return;
     }
     this.ordersService.buy(this.symbol, this.leverage, this.amount);
     this.orderStatus = LastOrderStatus.BUY;
+    this.saveToStorage();
   }
 
   onBuyComplete() {
     this.ordersService.buyComplete();
     this.orderStatus = LastOrderStatus.INITIATE;
+    this.saveToStorage();
+    this.adjustAmount();
   }
 
   onSell() {
+    this.adjustAmount();
     if (this.amount == 0) {
       alert('Use amount');
       return;
     }
     this.ordersService.sell(this.symbol, this.leverage, this.amount);
     this.orderStatus = LastOrderStatus.SELL;
+    this.saveToStorage();
   }
 
   onSellComplete() {
     this.ordersService.sellComplete();
     this.orderStatus = LastOrderStatus.INITIATE;
+    this.saveToStorage();
+    this.adjustAmount();
+  }
+
+  adjustAmount() {
+    const { balances } = this.ordersService;
+    if (!balances) return;
+    let totalBalance = balances.total.TOTAL;
+    if (this.amount > totalBalance) this.amount = Math.floor(totalBalance);
   }
 }

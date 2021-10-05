@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEventType, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { interval } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,8 @@ export class BinanceService {
 
   constructor(
     private httpClient: HttpClient,
-    private socket: Socket
+    private socket: Socket,
+    private readonly storageService: LocalStorageService
   ) { }
 
   async getSymbols(): Promise<string[]> {
@@ -24,7 +25,8 @@ export class BinanceService {
 
   setSymbol(symbol: string) {
     this.selectedSymbol = symbol;
-    this.socket.emit('symbol', { symbol });
+    const secretKey = this.storageService.getSecretKey();
+    this.socket.emit('symbol', { symbol, secretKey });
   }
 
   getPrice() {

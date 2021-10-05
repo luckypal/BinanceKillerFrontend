@@ -6,7 +6,7 @@
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Symbol</mat-label>
         <input type="text" placeholder="Select one" aria-label="Number" matInput [formControl]="myControl"
-          [matAutocomplete]="auto" [matAutocompleteDisabled]="!isSelectable">
+          [matAutocomplete]="auto" [matAutocompleteDisabled]="!isSelectable" [value]="symbol" [readonly]="!isSelectable">
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)='onSelectSymbol($event.option.value)'>
           <mat-option *ngFor="let symbol of filteredSymbols | async" [value]="symbol">
             {{symbol}}

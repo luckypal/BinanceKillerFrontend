@@ -24,6 +24,10 @@ export class OrderComponent implements OnInit {
     return this.order?.side == OrderSide.SELL;
   }
 
+  get total() {
+    return Math.floor(this.order!.amount * this.order!.leverage * 100) / 100;
+  }
+
   printDate(date: number) {
     return moment(this.order!.createdAt)
     .format('MM-DD HH:mm:ss')
