@@ -234,5 +234,6 @@ export class OrdersService {
       },
       amounts
     };
+    return totalBalance;
   }
 }

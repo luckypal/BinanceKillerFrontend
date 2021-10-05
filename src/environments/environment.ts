@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3333/api',
-  serverUrl: 'http://localhost:3333',
-  // apiUrl: 'https://bkbot.invidme.com/api',
-  // serverUrl: 'https://bkbot.invidme.com',
+  // apiUrl: 'http://localhost:3333/api',
+  // serverUrl: 'http://localhost:3333',
+  apiUrl: 'https://bkbot.invidme.com/api',
+  serverUrl: 'https://bkbot.invidme.com',
   updateInterval: 1000,
   primaryUsdt: 1000,
 };
