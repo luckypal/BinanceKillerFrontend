@@ -12,6 +12,7 @@ export interface Order {
   amount: number;
   leverage: number;
   fee: number;
+  balance?: number;
   side: OrderSide;
   createdAt: number;
   finishedAt: number;

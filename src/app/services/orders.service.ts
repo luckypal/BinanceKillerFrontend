@@ -223,6 +223,7 @@ export class OrdersService {
 
         if (index % 2 == 1) {
           this.lastBalance = balances.SPOT;
+          order.balance = this.lastBalance;
         }
       });
 
