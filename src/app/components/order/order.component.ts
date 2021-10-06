@@ -25,7 +25,7 @@ export class OrderComponent implements OnInit {
   }
 
   get total() {
-    return Math.floor(this.order!.amount * this.order!.leverage * 100) / 100;
+    return this.order!.amount * this.order!.leverage;
   }
 
   printDate(date: number) {

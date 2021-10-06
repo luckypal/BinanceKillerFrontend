@@ -21,14 +21,14 @@
   </div>
 
   <div fxFlex="33.33">
-    <h1 class="label-price">{{getBalance()}}</h1>
+    <h1 class="label-price">{{getBalance() | floor}}</h1>
   </div>
 </div>
 
-<div fxFill fxLayout="row">
+<div fxFill fxLayout="row" class="sliders" fxLayoutGap="10px">
   <div fxFlex="50">
     <div class="full-width">
-      <mat-label bold>Leverage {{leverage}}</mat-label>
+      <mat-label bold>Leverage <b>{{leverage}}</b></mat-label>
       <mat-slider thumbLabel tickInterval="1" step="1" min="1" max="125" aria-label="units" class="full-width"
         [(ngModel)]="leverage" [disabled]="!isBuyable"></mat-slider>
     </div>
@@ -36,7 +36,7 @@
 
   <div fxFlex="50">
     <div class="full-width">
-      <mat-label bold>Amount {{amount}}</mat-label>
+      <mat-label bold>Amount <b>{{amount}}</b></mat-label>
       <mat-slider thumbLabel tickInterval="1" step="1" min="0" [max]="getBalance()" aria-label="units"
         [(ngModel)]="amount" class="full-width" [disabled]="!isBuyable"></mat-slider>
     </div>
@@ -69,7 +69,7 @@
   <div fxFlex="33.33">
     <h1 class="label-price"
       [ngClass]="{'danger': getAmountChange() < 0, 'success': getAmountChange() > 0, 'label-price': true}">
-      {{getAmountChange()}}</h1>
+      {{getAmountChange() | floor}}</h1>
   </div>
 </div>
 
@@ -78,12 +78,12 @@
     <app-order [order]="order"></app-order>
   </div>
   <div fxLayout="row">
+    <div fxFlex="20">Created At</div>
     <div fxFlex="15">Symbol</div>
     <div fxFlex="15">Price</div>
     <div fxFlex="15">Amount</div>
     <div fxFlex="15">Leverage</div>
     <div fxFlex="15">Total</div>
     <div fxFlex="5">Fee</div>
-    <div fxFlex="20">Created At</div>
   </div>
 </div>

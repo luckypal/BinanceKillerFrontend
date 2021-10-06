@@ -35,11 +35,11 @@ export class OrdersService {
     private readonly binanceService: BinanceService
   ) {
     this.orders = [
-    // { "signalId": "asdfasdfsdf", "orderId": "ckuc96vzc0000389h4bn05h7i", "symbol": "BTCUSDT", "price": 1000, "amount": 1000, "leverage": 1, fee: 10, "side": OrderSide.BUY, "createdAt": 1633327784040, "finishedAt": 1633327784040 },
-    // { "signalId": "asdfasdfsdf", "orderId": "ckuc96xev0001389hz0d1rgbu", "symbol": "BTCUSDT", "price": 1000, "amount": 1000, "leverage": 1, fee: 10, "side": OrderSide.SELL, "createdAt": 1633327785895, "finishedAt": 1633327785895 },
-    
-    // { "signalId": "asdfasdfsdf111", "orderId": "ckuc96vzc0000389h4bn05h7i", "symbol": "BTCUSDT", "price": 1000, "amount": 1000, "leverage": 1, fee: 10, "side": OrderSide.BUY, "createdAt": 1633327784040, "finishedAt": 1633327784040 },
-    // { "signalId": "asdfasdfsdf111", "orderId": "ckuc96xev0001389hz0d1rgbu", "symbol": "BTCUSDT", "price": 1100, "amount": 1000, "leverage": 1, fee: 10, "side": OrderSide.SELL, "createdAt": 1633327785895, "finishedAt": 1633327785895 },
+      // { "signalId": "asdfasdfsdf", "orderId": "ckuc96vzc0000389h4bn05h7i", "symbol": "BTCUSDT", "price": 1000, "amount": 1000, "leverage": 1, fee: 10, "side": OrderSide.BUY, "createdAt": 1633327784040, "finishedAt": 1633327784040 },
+      // { "signalId": "asdfasdfsdf", "orderId": "ckuc96xev0001389hz0d1rgbu", "symbol": "BTCUSDT", "price": 1000, "amount": 1000, "leverage": 1, fee: 10, "side": OrderSide.SELL, "createdAt": 1633327785895, "finishedAt": 1633327785895 },
+
+      // { "signalId": "asdfasdfsdf111", "orderId": "ckuc96vzc0000389h4bn05h7i", "symbol": "BTCUSDT", "price": 1000, "amount": 1000, "leverage": 1, fee: 10, "side": OrderSide.BUY, "createdAt": 1633327784040, "finishedAt": 1633327784040 },
+      // { "signalId": "asdfasdfsdf111", "orderId": "ckuc96xev0001389hz0d1rgbu", "symbol": "BTCUSDT", "price": 1100, "amount": 1000, "leverage": 1, fee: 10, "side": OrderSide.SELL, "createdAt": 1633327785895, "finishedAt": 1633327785895 },
     ];
   }
 
@@ -57,8 +57,7 @@ export class OrdersService {
     const {
       activePrice: price
     } = this.binanceService;
-    let fee = (amount * leverage) * this.feePercent;
-    fee = Math.floor(fee * 100) / 100;
+    const fee = (amount * leverage) * this.feePercent;
 
     const order: Order = {
       signalId: cuid(),

@@ -8,6 +8,7 @@ import { BinanceService } from '../../services/binance.service';
 import { LastOrderStatus, OrdersService } from '../../services/orders.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { Router } from '@angular/router';
+import { floor } from 'src/app/pipes/floor.pipe';
 
 @Component({
   selector: 'app-dashboard',
@@ -103,7 +104,7 @@ export class DashboardComponent implements OnInit {
   getBalance() {
     const { balances } = this.ordersService;
     if (!balances) return 0;
-    return Math.floor(balances.total.TOTAL * 100) / 100;
+    return balances.total.TOTAL;
   }
 
   getAmountChange() {
@@ -112,11 +113,11 @@ export class DashboardComponent implements OnInit {
     let totalBalance = balances.total.TOTAL;
     let changes = totalBalance - lastBalance;
 
-    changes = Math.floor(changes * 100) / 100;
-    totalBalance = Math.floor(balances.total.TOTAL * 100) / 100;
+    changes = changes;
+    totalBalance = balances.total.TOTAL;
 
-    if (changes) this.titleService.setTitle(`${changes} - Binkiller`);
-    else this.titleService.setTitle(`${totalBalance} - Binkiller`);
+    if (changes) this.titleService.setTitle(`${floor(changes)} - Binkiller`);
+    else this.titleService.setTitle(`${floor(totalBalance)} - Binkiller`);
     return changes;
   }
 

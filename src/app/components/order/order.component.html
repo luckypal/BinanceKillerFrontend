@@ -1,9 +1,9 @@
 <div *ngIf="order" class="full-width order" [ngClass]="{'buy': isBuy, 'sell': isSell}" fxLayout="row">
+  <div fxFlex="20">{{printDate(order.createdAt)}}</div>
   <div fxFlex="15">{{order.symbol}}</div>
   <div fxFlex="15">{{order.price}}</div>
-  <div fxFlex="15">{{order.amount}}</div>
+  <div fxFlex="15">{{order.amount | floor}}</div>
   <div fxFlex="15">{{order.leverage}}</div>
-  <div fxFlex="15">{{total}}</div>
-  <div fxFlex="5">{{order.fee}}</div>
-  <div fxFlex="20">{{printDate(order.createdAt)}}</div>
+  <div fxFlex="15">{{total | floor}}</div>
+  <div fxFlex="5">{{order.fee | floor}}</div>
 </div>
