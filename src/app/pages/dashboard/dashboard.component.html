@@ -36,7 +36,7 @@
 
   <div fxFlex="50">
     <div class="full-width">
-      <mat-label bold>Amount <b>{{amount}}</b></mat-label>
+      <mat-label bold>Amount <b>{{amount | floor}}</b></mat-label>
       <mat-slider thumbLabel tickInterval="1" step="1" min="0" [max]="getBalance()" aria-label="units"
         [(ngModel)]="amount" class="full-width" [disabled]="!isBuyable"></mat-slider>
     </div>
