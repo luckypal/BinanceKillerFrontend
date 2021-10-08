@@ -1,0 +1,7 @@
+<a mat-button [href]="link" target="_blank" fxFill class="news-item">
+  <div *ngIf="data">
+    <p class="title">{{data.title}}</p>
+    <p *ngFor="let date of innerData" class="news-data">{{date}}</p>
+    <label>{{createdAt}}</label>
+  </div>
+</a>

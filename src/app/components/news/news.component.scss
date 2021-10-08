@@ -1,0 +1,18 @@
+.news-item {
+  border-left: solid;
+  border-left-color: #333;
+  border-left-width: 2px;
+  border-bottom: solid 1px #ddd;
+  text-align: left;
+}
+
+.title {
+  font-weight: bold;
+  white-space: initial;
+  margin-bottom: 5px;
+}
+
+.news-data {
+  padding-left: 10px;
+  margin-bottom: 3px;
+}

@@ -27,6 +27,7 @@ import { OrderComponent } from './components/order/order.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { FloorPipe } from './pipes/floor.pipe';
+import { NewsComponent } from './components/news/news.component';
 
 const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
 
@@ -38,7 +39,8 @@ const config: SocketIoConfig = { url: environment.serverUrl, options: {} };
     PriceComponent,
     BalanceComponent,
     OrderComponent,
-    FloorPipe
+    FloorPipe,
+    NewsComponent
   ],
   imports: [
     BrowserModule,

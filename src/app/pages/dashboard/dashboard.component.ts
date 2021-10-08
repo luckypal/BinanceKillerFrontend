@@ -9,6 +9,8 @@ import { LastOrderStatus, OrdersService } from '../../services/orders.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { Router } from '@angular/router';
 import { floor } from 'src/app/pipes/floor.pipe';
+import { ApiService } from 'src/app/services/api.service';
+import { News } from 'src/app/models/news.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +21,7 @@ export class DashboardComponent implements OnInit {
   myControl = new FormControl();
   symbols: string[] = [];
   filteredSymbols?: Observable<string[]>;
+  news: News[] = [];
 
   symbol = '';
   leverage = 1;
@@ -29,6 +32,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private titleService: Title,
+    private readonly apiService: ApiService,
     public readonly binanceService: BinanceService,
     public readonly ordersService: OrdersService,
     private readonly storageService: LocalStorageService
@@ -41,6 +45,11 @@ export class DashboardComponent implements OnInit {
       return;
     }
 
+    this.loadTrading();
+    this.loadNews();
+  }
+
+  async loadTrading() {
     this.symbols = await this.binanceService.getSymbols();
     this.filteredSymbols = this.myControl.valueChanges
       .pipe(
@@ -54,7 +63,6 @@ export class DashboardComponent implements OnInit {
       return;
     }
 
-    console.log(loadedData);
     const {
       symbol,
       leverage,
@@ -68,6 +76,10 @@ export class DashboardComponent implements OnInit {
     this.orderStatus = lastOrder;
     this.ordersService.setOrders(orders);
     this.binanceService.setSymbol(symbol);
+  }
+
+  async loadNews() {
+    this.news = await this.apiService.getNews();
   }
 
   private _filter(value: string): string[] {
