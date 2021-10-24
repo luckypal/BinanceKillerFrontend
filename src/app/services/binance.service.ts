@@ -32,4 +32,8 @@ export class BinanceService {
   getPrice() {
     return this.socket.fromEvent('price');
   }
+
+  getNewCoin() {
+    return this.socket.fromEvent('newcoin');
+  }
 }
